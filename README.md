@@ -2,7 +2,7 @@
 
 Source code untuk materi Implementasi Dasar PWA bagian 03 PWA with Workbox oleh Rahmanda Wibowo di IT Today 2021.
 
-Live demo dapat diakses di https://adoring-lalande-5f860a.netlify.app/
+Live demo dapat diakses di https://romantic-cray-542101.netlify.app/
 
 Untuk menjalankan source code di local, berikut langkah-langkah yang harus diikuti:
 
