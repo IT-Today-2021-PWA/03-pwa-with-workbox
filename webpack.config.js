@@ -5,6 +5,21 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const htmlToGenerate = [
+  {
+    filename: 'index.html',
+    template: './index.html',
+  },
+  {
+    filename: 'bookmark/index.html',
+    template: './index.html',
+  },
+  {
+    filename: 'detail/index.html',
+    template: './index.html',
+  },
+]
+
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
 
@@ -75,10 +90,7 @@ module.exports = (env, argv) => {
       publicPath: '/',
     },
     plugins: [
-      new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: './index.html',
-      }),
+      ...htmlToGenerate.map(config => new HtmlWebpackPlugin(config)),
 
       new CopyWebpackPlugin({
         patterns: [
