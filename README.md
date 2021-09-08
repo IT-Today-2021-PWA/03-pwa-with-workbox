@@ -1,20 +1,13 @@
-## Getting started
+# IT Today 2021 - 03 PWA with Workbox
 
-```
-yarn install
-yarn start
-```
+Source code untuk materi Implementasi Dasar PWA bagian 03 PWA with Workbox oleh Rahmanda Wibowo di IT Today 2021.
 
-## Debugging service workers
+Live demo dapat diakses di https://adoring-lalande-5f860a.netlify.app/
 
-You may have noticed that running `yarn start` doesn't register any service workers.
+Untuk menjalankan source code di local, berikut langkah-langkah yang harus diikuti:
 
-That's because offline capabilities are confusing during development since you would always see the cached version
-instead of the latest one with your changes.
-
-You can debug service workers locally by building the production bundle and serving it like this:
-
-```
-yarn run build
-yarn run serve
-```
+1. Clone repo ini
+2. Masuk ke root direktori repo yang sudah di clone
+3. Instal dependencies dengan jalankan command `npm install` atau `yarn`
+4. Jalankan command `npm start`
+4. Buka url `http://localhost:3000` di browser
