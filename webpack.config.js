@@ -4,6 +4,7 @@ const path = require("path");
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const htmlToGenerate = [
   {
@@ -35,12 +36,12 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          enforce: 'pre',
-          include: [path.resolve(__dirname, './src'), path.resolve(__dirname, './service-worker')],
+          test: /\.css$/i,
           use: [
-            { loader: 'eslint-loader', options: { emitErrors: true } },
-          ],
+            isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            'css-loader',
+            'postcss-loader',
+          ]
         },
         // Loader for TypeScript files in ./src
         {
@@ -100,11 +101,14 @@ module.exports = (env, argv) => {
 
       new webpack.HotModuleReplacementPlugin(),
       ...(isProduction ? [
+        new MiniCssExtractPlugin({
+          filename: '[name].[contenthash].css',
+        }), 
         new InjectManifest({
           swSrc: path.resolve(__dirname, './service-worker/serviceWorkerWorkbox.ts'),
           swDest: 'service-worker.js',
-        }),
-      ] : [
+        })
+     ] : [
         new ForkTsCheckerWebpackPlugin({
           tsconfig: path.resolve(__dirname, './src/tsconfig.json'),
         }),

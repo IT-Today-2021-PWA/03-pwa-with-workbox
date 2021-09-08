@@ -8,9 +8,7 @@ declare const self: Window & ServiceWorkerGlobalScope;
 skipWaiting();
 clientsClaim();
 
-const precacheManifest = [
-  'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css',
-].concat(self.__WB_MANIFEST as Array<any> || []);
+const precacheManifest = [].concat(self.__WB_MANIFEST as Array<any> || []);
 precacheAndRoute(precacheManifest);
 
 const handler = createHandlerBoundToURL('/index.html');

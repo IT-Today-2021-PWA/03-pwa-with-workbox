@@ -1,6 +1,9 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "plugins": [
     "@typescript-eslint",
     "react",
@@ -9,10 +12,6 @@
   "extends": [
     "airbnb-typescript"
   ],
-  "parserOptions": {
-    "project": ["src/tsconfig.json", "service-worker/tsconfig.json"],
-    "sourceType": "module"
-  },
   "settings": {
     "react": {
       "version": "detect"
