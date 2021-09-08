@@ -1,82 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
+import BookmarkPage from './pages/BookmarkPage';
+import DetailPage from './pages/DetailPage';
+import HomePage from './pages/HomePage';
 
-const App = () => {
-  const [count, setCount] = useState();
-  let messageChannel: MessageChannel;
-
-  let handleBroadcastClick: (e: React.MouseEvent) => void = () => undefined;
-  if ('BroadcastChannel' in navigator) {
-    const broadcast = new BroadcastChannel('count-channel');
-    useEffect(() => {
-      navigator.serviceWorker.onmessage = (event) => {
-        if (event.data && event.data.type === 'REPLY_COUNT_CLIENTS') {
-          setCount(event.data.count);
-        }
-      };
-
-      navigator.serviceWorker.ready.then((registration) => {
-      // MessageChannel
-        messageChannel = new MessageChannel();
-        registration.active.postMessage({
-          type: 'INIT_PORT',
-        }, [messageChannel.port2]);
-        messageChannel.port1.onmessage = (event: MessageEvent) => {
-          setCount(event.data.payload);
-        };
-      });
-
-      // Broadcast API
-      broadcast.onmessage = (event) => {
-        setCount(event.data.payload);
-      };
-    }, []);
-
-    handleBroadcastClick = (e: React.MouseEvent) => {
-      e.preventDefault();
-
-      // Broadcast API
-      broadcast.postMessage({
-        type: 'INCREASE_COUNT_BROADCAST',
-      });
-    };
-  }
-
-  const handleMessageClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    // Message Channel
-    navigator.serviceWorker.controller.postMessage({
-      type: 'INCREASE_COUNT_MESSAGE',
-    });
-  };
-
-  const handleClientsClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    // Message Channel
-    navigator.serviceWorker.controller.postMessage({
-      type: 'INCREASE_COUNT_CLIENTS',
-    });
-  };
-
+export default function App() {
   return (
-    <div className="app">
-      <h1>How to communicate with Service Workers</h1>
-      <h3>Increment the counter of the Service Worker via...</h3>
-      <div className="wrapper">
-        <button type="button" onClick={handleMessageClick}>MessageChannel</button>
-        <button type="button" onClick={handleBroadcastClick}>Broadcast API</button>
-        <button type="button" onClick={handleClientsClick}>Clients API</button>
-
-        <h2 className="counter">
-          Counter:
-          {count}
-        </h2>
-      </div>
-      <footer>
-        Full tutorial&nbsp;
-        <a href="https://felixgerschau.com/how-to-communicate-with-service-workers">here</a>
-      </footer>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/bookmark">
+          <BookmarkPage />
+        </Route>
+        <Route path="/detail">
+          <DetailPage />
+        </Route>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route path="*">
+          <h1>Page Not Found</h1>
+        </Route>
+      </Switch>
+    </Router>
   );
-};
-
-export default App;
+}
