@@ -31,7 +31,7 @@ export default function BookmarkPage() {
             {value.map((item) => (
               <li key={item.mal_id}>
                 <Link to={`/detail/?id=${item.mal_id}`}>
-                  <div className="bg-white rounded-lg shadow flex p-2">
+                  <div className="bg-white rounded-lg shadow flex p-2 mb-4">
                     <figure className="flex-none" style={{ width: '96px' }}>
                       <img className="w-full rounded-lg" src={item.image_url} alt={`Poster for ${item.title}`} />
                     </figure>

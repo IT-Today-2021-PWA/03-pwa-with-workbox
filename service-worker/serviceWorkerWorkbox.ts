@@ -20,8 +20,18 @@ const navigationRoute = new NavigationRoute(handler, {
 });
 registerRoute(navigationRoute);
 
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    self.caches.keys().then(cacheNames => Promise.all(
+      cacheNames
+        .filter(cacheName => ['api.jikan.moe', 'myanimelist-images', 'runtime'].includes(cacheName))
+        .map(cacheName => caches.delete(cacheName))
+    ))
+  );
+});
+
 registerRoute(
-  (event) => event.request.url.startsWith('https://api.jikan.moe/'),
+  (event) => event.request.url.startsWith('https://api.jikan.moe/v3/top/anime/'),
   new StaleWhileRevalidate({
     cacheName: 'api.jikan.moe',
     plugins: [

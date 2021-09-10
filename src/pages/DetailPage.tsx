@@ -29,7 +29,7 @@ export default function DetailPage() {
         setIsBookmarked(true);
       });
     }
-  }, [value, id, isBookmarked, caches]);
+  }, [value, isBookmarked]);
 
   React.useEffect(() => {
     document.body.style.overflow = 'hidden';
